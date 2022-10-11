@@ -1,4 +1,4 @@
-import getopt, sys, os
+import sys, os
 import matplotlib.pyplot as plt
 
 def visualize_maze(matrix, bonus, start, end, route=None):
@@ -100,40 +100,23 @@ def getStartEndPoint(matrix):
 
 # visualize_maze(matrix,bonus_points,start,end)
 
-def main(argv):
+def main():
+    s = [(input(">>")) for i in range(3)]
     input_file, output_file, used_algo = '', '', ''
-    try:
-        options, args = getopt(argv, 'hi:o', ['input = ', 'output = ', 'algo = '])
-    except getopt.GetoptError:
-        print('Command line arguments invalid, try again.')
-        sys.exit(2)
 
-    for option, arg in options:
-        if option == '--input':
-            input_file = arg
-        elif option == '--output':
-            output_file = arg
-        elif option == '--algo':
-            algorithm_used = arg
+    input_file = s[0]
+    output_file = s[1]
+    used_algo = s[2]
 
     if (input_file == '' or output_file == ''):
         print('Arguments missing, try again.')
         sys.exit(2)
 
-    bonus_points, matrix = read_file(input_file)
+    bonus_points, matrix = read_file('./input/maze_map2.txt')
     start, end = getStartEndPoint(matrix)
 
-    route = []
-
-    if algorithm_used == 'dfs':
-        route = DFS(matrix, start, end).Try()
-    elif algorithm_used == 'bfs':
-        route = BFS(matrix, start, end).Try()
-    elif algorithm_used == 'greedy':
-        route = GreedyBFS(matrix, start, end).Try()
-    elif algorithm_used == 'astar':
-        route = AStar(matrix, start, end).Try()
-    elif algorithm_used == 'bonus':
-        route = Bonus(matrix, start, end, bonus_points).Try()
-    else:
-        print('Algorithm not specified. Printing the map without route to exit..')
+    print(input_file, output_file, used_algo)
+    print(matrix)
+    
+if __name__ == '__main__':
+    main()
