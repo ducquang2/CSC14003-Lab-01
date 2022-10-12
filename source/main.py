@@ -1,7 +1,7 @@
 import sys,os
 import matplotlib.pyplot as plt
 
-PATH = 'C:/Users/Tin/CSC14003-Lab-01/CSC14003-Lab-01/input/maze_map1.txt'
+PATH = './input/maze_map1.txt'
 
 def visualize_maze(matrix, bonus, start, end, route=None):
     """
@@ -83,11 +83,9 @@ def main():
         for j in range(len(matrix[0])):
             if matrix[i][j]=='S':
                 start=(i,j)
-
             elif matrix[i][j]==' ':
                 if (i==0) or (i==len(matrix)-1) or (j==0) or (j==len(matrix[0])-1):
-                    end=(i,j)
-                    
+                    end=(i,j)    
             else:
                 pass
     visualize_maze(matrix,bonus_points,start,end)

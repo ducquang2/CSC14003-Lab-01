@@ -12,7 +12,7 @@ with open('input/maze_map1.txt', 'w') as outfile:
     outfile.write('xxxxx x  x x x     x x\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
 
-with open('input/maze_map2.txt', 'w') as outfile:
+with open('input/maze_map02.txt', 'w') as outfile:
     outfile.write('0\n')
     outfile.write('xxxxxxxxxxxxxxxxxxxxxx\n')
     outfile.write('x   x   xx xx        x\n')
