@@ -1,7 +1,7 @@
 import sys, os
 import matplotlib.pyplot as plt
 
-def visualize_maze(matrix, bonus, start, end, route=None):
+def visualize_maze(matrix, bonus, start, end, output_file, route=None):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -51,7 +51,7 @@ def visualize_maze(matrix, bonus, start, end, route=None):
          verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
-    plt.savefig('./demo.jpg')
+    plt.savefig(output_file)
 
     plt.show()
 
@@ -63,7 +63,7 @@ def visualize_maze(matrix, bonus, start, end, route=None):
     
     return plt
 
-def read_file(file_name: str = './input/maze_map2.txt'):
+def read_file(file_name):
     f=open(file_name,'r')
     n_bonus_points = int(next(f)[:-1])
     bonus_points = []
@@ -98,13 +98,11 @@ def getStartEndPoint(matrix):
     
     return start, end
 
-# visualize_maze(matrix,bonus_points,start,end)
-
 def main():
     s = [(input(">>")) for i in range(3)]
     input_file, output_file, used_algo = '', '', ''
 
-    input_file = s[0]
+    input_file = "./input/" + s[0]
     output_file = s[1]
     used_algo = s[2]
 
@@ -112,11 +110,12 @@ def main():
         print('Arguments missing, try again.')
         sys.exit(2)
 
-    bonus_points, matrix = read_file('./input/maze_map2.txt')
+    bonus_points, matrix = read_file(input_file)
     start, end = getStartEndPoint(matrix)
 
-    print(input_file, output_file, used_algo)
-    print(matrix)
+    # print(input_file, output_file, used_algo)
+    # print(matrix)
+    visualize_maze(matrix,bonus_points,start,end,output_file)
     
 if __name__ == '__main__':
     main()
