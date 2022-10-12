@@ -1,7 +1,7 @@
-import sys,os
+import sys, os
 import matplotlib.pyplot as plt
 
-PATH = './input/maze_map1.txt'
+PATH = './input/map_01.txt'
 
 def visualize_maze(matrix, bonus, start, end, route=None):
     """
