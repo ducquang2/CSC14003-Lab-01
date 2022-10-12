@@ -1,5 +1,6 @@
 import sys, os
 import matplotlib.pyplot as plt
+from BFS import *
 
 PATH = './input/map_01.txt'
 
@@ -75,19 +76,28 @@ def read_file(file_name:str):
 
     return bonus_points, matrix
 
-def main():
-    bonus_points, matrix = read_file(PATH)
-    print(f'The height of the matrix: {len(matrix)}')
-    print(f'The width of the matrix: {len(matrix[0])}')
+def getStartEndPoint(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if matrix[i][j]=='S':
                 start=(i,j)
+
             elif matrix[i][j]==' ':
                 if (i==0) or (i==len(matrix)-1) or (j==0) or (j==len(matrix[0])-1):
-                    end=(i,j)    
+                    end=(i,j)
+                    
             else:
                 pass
-    visualize_maze(matrix,bonus_points,start,end)
+    
+    return start, end
+
+def main():
+    bonus_points, matrix = read_file(PATH)
+    print(f'The height of the matrix: {len(matrix)}')
+    print(f'The width of the matrix: {len(matrix[0])}')
+    start, end = getStartEndPoint(matrix)
+    route = BFS(matrix,start,end)
+    visualize_maze(matrix,bonus_points,start,end,route)
+    
 if __name__ == '__main__':
     main()
