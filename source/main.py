@@ -1,5 +1,6 @@
 import sys, os
 import matplotlib.pyplot as plt
+from BFS import BFS
 
 def visualize_maze(matrix, bonus, start, end, output_file, route=None):
     """
@@ -102,7 +103,7 @@ def main():
     s = [(input(">>")) for i in range(3)]
     input_file, output_file, used_algo = '', '', ''
 
-    input_file = "./input/" + s[0]
+    input_file = "./input/" + s[0] + ".txt"
     output_file = s[1]
     used_algo = s[2]
 
@@ -113,9 +114,11 @@ def main():
     bonus_points, matrix = read_file(input_file)
     start, end = getStartEndPoint(matrix)
 
+    route = BFS(matrix, start, end)
+
     # print(input_file, output_file, used_algo)
     # print(matrix)
-    visualize_maze(matrix,bonus_points,start,end,output_file)
+    visualize_maze(matrix,bonus_points,start,end,output_file, route)
     
 if __name__ == '__main__':
     main()
