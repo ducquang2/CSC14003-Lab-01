@@ -1,6 +1,8 @@
 import os
 import matplotlib.pyplot as plt
 
+PATH = 'lab01\CSC14003-Lab-01\map_01.txt'
+
 def visualize_maze(matrix, bonus, start, end, route=None):
     """
     Args:
@@ -51,7 +53,7 @@ def visualize_maze(matrix, bonus, start, end, route=None):
          verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
-    plt.savefig('lab\demo2.jpg')
+    plt.savefig('lab01\demo2.jpg')
     plt.show()
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
@@ -62,7 +64,7 @@ def visualize_maze(matrix, bonus, start, end, route=None):
 
     return plt
 
-def read_file(file_name: str = 'C:/Users/rongc/OneDrive - VNU-HCMUS/new/OneDrive - VNU-HCMUS/Desktop/Study/Code/AI/lab/map_01.txt'):
+def read_file(file_name: str = PATH):
     f=open(file_name,'r')
     n_bonus_points = int(next(f)[:-1])
     bonus_points = []
@@ -76,24 +78,25 @@ def read_file(file_name: str = 'C:/Users/rongc/OneDrive - VNU-HCMUS/new/OneDrive
 
     return bonus_points, matrix
 
-bonus_points, matrix = read_file('C:/Users/rongc/OneDrive - VNU-HCMUS/new/OneDrive - VNU-HCMUS/Desktop/Study/Code/AI/lab/map_01.txt')
+bonus_points, matrix = read_file(PATH)
 
 print(f'The height of the matrix: {len(matrix)}')
 print(f'The width of the matrix: {len(matrix[0])}')
 
+
+
 def get_start_end(matrix):
+
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if matrix[i][j]=='S':
                 start=(i,j)
-
             elif matrix[i][j]==' ':
                 if (i==0) or (i==len(matrix)-1) or (j==0) or (j==len(matrix[0])-1):
-                    end=(i,j)
-                
+                    end=(i,j)    
             else:
                 pass
-    return start,end
+    return start, end
 
 start, end = get_start_end(matrix)
 visualize_maze(matrix,bonus_points,start,end)
