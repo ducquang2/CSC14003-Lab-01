@@ -1,5 +1,7 @@
-import sys, os
+import sys,os
 import matplotlib.pyplot as plt
+
+PATH = 'C:/Users/Tin/CSC14003-Lab-01/CSC14003-Lab-01/input/maze_map1.txt'
 
 def visualize_maze(matrix, bonus, start, end, route=None):
     """
@@ -44,33 +46,28 @@ def visualize_maze(matrix, bonus, start, end, route=None):
     if route:
         for i in range(len(route)-2):
             plt.scatter(route[i+1][1],-route[i+1][0],
-                        marker=direction[i],color='silver')
+                marker=direction[i],color='silver')
 
     plt.text(end[1],-end[0],'EXIT',color='red',
-         horizontalalignment='center',
-         verticalalignment='center')
+        horizontalalignment='center',
+        verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
-    plt.savefig('./demo.jpg')
-
     plt.show()
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
     print(f'Ending point (x, y) = {end[0], end[1]}')
     
     for _, point in enumerate(bonus):
-      print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
-    
-    return plt
+        print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
-def read_file(file_name: str = './input/maze_map2.txt'):
+def read_file(file_name:str):
     f=open(file_name,'r')
     n_bonus_points = int(next(f)[:-1])
     bonus_points = []
-    if (n_bonus_points > 0):
-        for i in range(n_bonus_points):
-            x, y, reward = map(int, next(f)[:-1].split(' '))
-            bonus_points.append((x, y, reward))
+    for i in range(n_bonus_points):
+        x, y, reward = map(int, next(f)[:-1].split(' '))
+        bonus_points.append((x, y, reward))
 
     text=f.read()
     matrix=[list(i) for i in text.splitlines()]
@@ -78,12 +75,10 @@ def read_file(file_name: str = './input/maze_map2.txt'):
 
     return bonus_points, matrix
 
-# bonus_points, matrix = read_file('./input/maze_map2.txt')
-
-# print(f'The height of the matrix: {len(matrix)}')
-# print(f'The width of the matrix: {len(matrix[0])}')
-
-def getStartEndPoint(matrix):
+def main():
+    bonus_points, matrix = read_file(PATH)
+    print(f'The height of the matrix: {len(matrix)}')
+    print(f'The width of the matrix: {len(matrix[0])}')
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if matrix[i][j]=='S':
@@ -95,28 +90,6 @@ def getStartEndPoint(matrix):
                     
             else:
                 pass
-    
-    return start, end
-
-# visualize_maze(matrix,bonus_points,start,end)
-
-def main():
-    s = [(input(">>")) for i in range(3)]
-    input_file, output_file, used_algo = '', '', ''
-
-    input_file = s[0]
-    output_file = s[1]
-    used_algo = s[2]
-
-    if (input_file == '' or output_file == ''):
-        print('Arguments missing, try again.')
-        sys.exit(2)
-
-    bonus_points, matrix = read_file('./input/maze_map2.txt')
-    start, end = getStartEndPoint(matrix)
-
-    print(input_file, output_file, used_algo)
-    print(matrix)
-    
+    visualize_maze(matrix,bonus_points,start,end)
 if __name__ == '__main__':
     main()
