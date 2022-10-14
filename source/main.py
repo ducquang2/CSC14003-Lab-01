@@ -1,10 +1,9 @@
 import sys, os
 import matplotlib.pyplot as plt
 from BFS import *
-from DFS import *
+from DFS_test import *
 
-PATH = './input/maze_map5.txt'
-
+PATH = './input/map_02.txt'
 def visualize_maze(matrix, bonus, start, end, route=None):
     """
     Args:
@@ -97,6 +96,7 @@ def main():
     print(f'The height of the matrix: {len(matrix)}')
     print(f'The width of the matrix: {len(matrix[0])}')
     start, end = getStartEndPoint(matrix)
+    print(matrix, start, end)
     route = DFS(matrix,start,end)
     print(route)
     visualize_maze(matrix,bonus_points,start,end,route)
