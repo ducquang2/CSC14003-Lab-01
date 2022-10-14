@@ -1,4 +1,3 @@
-
 from numpy import true_divide
 
 def check_in_matrix(matrix, point):
@@ -9,28 +8,34 @@ def check_in_matrix(matrix, point):
 
 def DFS(maze,start,end):
     visited, neighbor = [], []
-    dirs=[(0,1),(0,-1),(1,0),(-1,0)]
+    dirs=[(0, 1), (0, -1), (1, 0), (-1, 0)]
 
     trace = dict()
-    trace[start] = None
+    trace[start] = None 
     visited.append(start)
     neighbor.append(start)
+    curDirection =(1,0)
 
-    while len(neighbor) != 0:
-        current = neighbor[-1]
+    while len(neighbor) != 0 :
+        current = neighbor.pop()
         visited.append(current)
-        neighbor.pop()
 
         if (current == end):
             break
-
+        
+        
         for step in dirs:
-            next = (current[0] + step[0], current[1] + step[1])
+            next = (current[0] + curDirection[0], current[1] + curDirection[1])
 
-            if check_in_matrix(maze, next):
-                if next not in visited:
-                    neighbor.append(next)
-                    trace[next] = current
+            if (next not in visited) and check_in_matrix(maze, next):
+                neighbor.append(next)  
+                trace[next] = current
+                curDirection = step
+                #break
+            else:
+                curDirection = dirs[step+1]
+                
+
     route = []
     check = end
 
@@ -42,26 +47,3 @@ def DFS(maze,start,end):
     route.reverse()
 
     return route
-    # if start[0]==end[0] and start[1]==end[1]:
-    #     return ((start[0],start[1]))
-    # route = []    
-    # dirs=[(0,1),(0,-1),(1,0),(-1,0)]
-    # x,y = start[0],start[1]
-    # for dx,dy in dirs:
-    #     nx=x
-    #     ny=y
-    #     while 0 <= nx +dx < len(maze) and 0 <= ny +dy < len(maze) and maze[nx+dx][ny+dy] != 'x' :
-    #         nx+=dx
-    #         ny+=dy
-
-    #     if maze[nx][ny] != 0:
-    #         continue
-            
-    #     maze[nx][ny]=2
-
-    #     if(DFS(maze,(nx,ny),end) == start):
-    #         route.append((nx,ny))
-    #         return route
-    # return route
-
-
