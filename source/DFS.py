@@ -6,44 +6,47 @@ def check_in_matrix(matrix, point):
     else:
         return False
 
-def DFS(maze,start,end):
-    visited, neighbor = [], []
-    dirs=[(0, 1), (0, -1), (1, 0), (-1, 0)]
+def DFS(maze,start,end,bonus_points):
+    frontier, explored = [], []
+    dirs=[(0, 1), (1, 0), (-1, 0), (0,-1)] #right down up left
 
     trace = dict()
     trace[start] = None 
-    visited.append(start)
-    neighbor.append(start)
-    curDirection =(1,0)
-
-    while len(neighbor) != 0 :
-        current = neighbor.pop()
-        visited.append(current)
+    frontier.append(start)
+    explored.append(start)
+    preDirection =(0,0)
+    temp=(0,0)
+    while len(frontier) != 0 :
+        current = frontier.pop()
 
         if (current == end):
-            break
-        
+            route = []
+            check = end
+            while check != start:
+                route.append(check)
+                check = trace[check]
+            route.append(start)
+            route.reverse()
+            cost = len(route)
+            for bp in bonus_points:
+                if (bp[0],bp[1]) in route:
+                    cost = cost + bp[2]
+            return route, cost     
         
         for step in dirs:
-            next = (current[0] + curDirection[0], current[1] + curDirection[1])
-
-            if (next not in visited) and check_in_matrix(maze, next):
-                neighbor.append(next)  
+            next = (current[0] + step[0], current[1] + step[1])
+            if next not in explored and check_in_matrix(maze, next) and step!=preDirection:
+                explored.append(next) 
+                frontier.append(next)
                 trace[next] = current
-                curDirection = step
-                #break
-            else:
-                curDirection = dirs[step+1]
+                temp=step
+
+        nextNow = (current[0] + preDirection[0], current[1] + preDirection[1])
+        if nextNow not in explored and check_in_matrix(maze, nextNow):
+                explored.append(nextNow) 
+                frontier.append(nextNow)
+                trace[nextNow] = current
+        else:
+            preDirection=temp
                 
-
-    route = []
-    check = end
-
-    while check != start:
-        route.append(check)
-        check = trace[check]
-
-    route.append(start)
-    route.reverse()
-
-    return route
+    return None,-1
