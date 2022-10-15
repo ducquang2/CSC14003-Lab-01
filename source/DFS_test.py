@@ -6,7 +6,7 @@ def check_in_matrix(matrix, point):
     else:
         return False
 
-def DFS(maze,start,end):
+def DFS(maze,start,end,bonus_points):
     frontier, explored = [], []
     dirs=[(0, 1), (1, 0), (-1, 0), (0,-1)] #right down up left
 
@@ -22,14 +22,16 @@ def DFS(maze,start,end):
         if (current == end):
             route = []
             check = end
-
             while check != start:
                 route.append(check)
                 check = trace[check]
-
             route.append(start)
             route.reverse()
-            return route     
+            cost = len(route)
+            for bp in bonus_points:
+                if (bp[0],bp[1]) in route:
+                    cost = cost + bp[2]
+            return route, cost     
         
         for step in dirs:
             next = (current[0] + step[0], current[1] + step[1])
@@ -47,4 +49,4 @@ def DFS(maze,start,end):
         else:
             preDirection=temp
                 
-    return None
+    return None,-1

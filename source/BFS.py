@@ -6,14 +6,14 @@ def check_in_matrix(matrix, point):
     else:
         return False
 
-def BFS(matrix, start, end):
+def BFS(matrix, start, end, bonus_points):
     path = deque()
     path.append(start)
     visited = []
     trace = dict()
     trace[start] = None
     dicrections = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-
+    current=(0,0)
 
     while len(path) != 0:
         current = path.popleft()
@@ -28,6 +28,8 @@ def BFS(matrix, start, end):
                 path.append(point)
                 visited.append(point)
 
+    if(current!=end):
+        return None,-1
     route = []
     check = end
 
@@ -37,5 +39,8 @@ def BFS(matrix, start, end):
 
     route.append(start)
     route.reverse()
-
-    return route
+    cost = len(route)
+    for bp in bonus_points:
+        if (bp[0],bp[1]) in route:
+            cost = cost + bp[2]
+    return route, cost     
