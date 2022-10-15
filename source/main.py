@@ -2,8 +2,9 @@ import sys, os
 import matplotlib.pyplot as plt
 from BFS import *
 from DFS import *
+from UCS import *
 
-PATH = './input/map3.txt'
+PATH = './input/map_bpoint1.txt'
 def visualize_maze(matrix, bonus, start, end, route=None):
     """
     Args:
@@ -90,16 +91,18 @@ def getStartEndPoint(matrix):
                 pass
     
     return start, end
+
 def write_cost_path(cost):
     with open('output/cost_path.txt', 'w') as f:
         f.write(str(cost))
+
 def main():
     bonus_points, matrix = read_file(PATH)
     print(f'The height of the matrix: {len(matrix)}')
     print(f'The width of the matrix: {len(matrix[0])}')
     start, end = getStartEndPoint(matrix)
     print(matrix, bonus_points, start, end)
-    route,cost = DFS(matrix,start,end,bonus_points)
+    route,cost = UCS(matrix,start,end,bonus_points)
     #print(route)
     write_cost_path(cost)
     visualize_maze(matrix,bonus_points,start,end,route)
