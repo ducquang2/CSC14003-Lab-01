@@ -1,8 +1,11 @@
 import sys, os
 import matplotlib.pyplot as plt
-from BFS import BFS
+from BFS import *
+from DFS import *
+from UCS import *
 
-def visualize_maze(matrix, bonus, start, end, output_file, route=None):
+PATH = './input/map_bpoint1.txt'
+def visualize_maze(matrix, bonus, start, end, route=None):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -45,44 +48,34 @@ def visualize_maze(matrix, bonus, start, end, output_file, route=None):
     if route:
         for i in range(len(route)-2):
             plt.scatter(route[i+1][1],-route[i+1][0],
-                        marker=direction[i],color='silver')
+                marker=direction[i],color='silver')
 
     plt.text(end[1],-end[0],'EXIT',color='red',
-         horizontalalignment='center',
-         verticalalignment='center')
+        horizontalalignment='center',
+        verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
-    plt.savefig(output_file)
-
     plt.show()
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
     print(f'Ending point (x, y) = {end[0], end[1]}')
     
     for _, point in enumerate(bonus):
-      print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
-    
-    return plt
+        print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
-def read_file(file_name):
+def read_file(file_name:str):
     f=open(file_name,'r')
     n_bonus_points = int(next(f)[:-1])
     bonus_points = []
-    if (n_bonus_points > 0):
-        for i in range(n_bonus_points):
-            x, y, reward = map(int, next(f)[:-1].split(' '))
-            bonus_points.append((x, y, reward))
+    for i in range(n_bonus_points):
+        x, y, reward = map(int, next(f)[:-1].split(' '))
+        bonus_points.append((x, y, reward))
 
     text=f.read()
     matrix=[list(i) for i in text.splitlines()]
     f.close()
 
     return bonus_points, matrix
-
-# bonus_points, matrix = read_file('./input/maze_map2.txt')
-
-# print(f'The height of the matrix: {len(matrix)}')
-# print(f'The width of the matrix: {len(matrix[0])}')
 
 def getStartEndPoint(matrix):
     for i in range(len(matrix)):
@@ -99,26 +92,20 @@ def getStartEndPoint(matrix):
     
     return start, end
 
+def write_cost_path(cost):
+    with open('output/cost_path.txt', 'w') as f:
+        f.write(str(cost))
+
 def main():
-    s = [(input(">>")) for i in range(3)]
-    input_file, output_file, used_algo = '', '', ''
-
-    input_file = "./input/" + s[0] + ".txt"
-    output_file = s[1]
-    used_algo = s[2]
-
-    if (input_file == '' or output_file == ''):
-        print('Arguments missing, try again.')
-        sys.exit(2)
-
-    bonus_points, matrix = read_file(input_file)
+    bonus_points, matrix = read_file(PATH)
+    print(f'The height of the matrix: {len(matrix)}')
+    print(f'The width of the matrix: {len(matrix[0])}')
     start, end = getStartEndPoint(matrix)
-
-    route = BFS(matrix, start, end)
-
-    # print(input_file, output_file, used_algo)
-    # print(matrix)
-    visualize_maze(matrix,bonus_points,start,end,output_file, route)
+    print(matrix, bonus_points, start, end)
+    route,cost = UCS(matrix,start,end,bonus_points)
+    #print(route)
+    write_cost_path(cost)
+    visualize_maze(matrix,bonus_points,start,end,route)
     
 if __name__ == '__main__':
     main()
