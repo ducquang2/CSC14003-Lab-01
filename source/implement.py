@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 
-
-def visualize_maze(matrix, bonus, start, end, route=None, explored=None):
+def visualize_maze(matrix, bonus, start, end, out_put, route=None, explored=None):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -56,6 +55,8 @@ def visualize_maze(matrix, bonus, start, end, route=None, explored=None):
         verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
+
+    plt.savefig(out_put)
     plt.show()
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
