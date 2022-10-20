@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 
-PATH = './input/map_bpoint1.txt'
-def visualize_maze(matrix, bonus, start, end, route=None, explored=None):
+def visualize_maze(matrix, bonus, start, end, out_put, name, route=None, explored=None):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -56,7 +55,10 @@ def visualize_maze(matrix, bonus, start, end, route=None, explored=None):
         verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
-    plt.show()
+
+    plt.title(name)
+    plt.savefig(out_put)
+    # plt.show()
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
     print(f'Ending point (x, y) = {end[0], end[1]}')
@@ -95,6 +97,6 @@ def getStartEndPoint(matrix):
     
     return start, end
 
-def write_cost_path(cost):
-    with open('output/cost_path.txt', 'w') as f:
+def write_cost_path(cost, output_file):
+    with open(output_file, 'w') as f:
         f.write(str(cost))

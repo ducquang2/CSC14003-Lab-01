@@ -18,7 +18,21 @@ def BFS(matrix, start, end, bonus_points):
     while len(path) != 0:
         current = path.popleft()
 
-        if (current == end): break # Chi out khi gap diem ket thuc
+        if(current == end):
+            route = []
+            check = end
+
+            while check != start:
+                route.append(check)
+                check = trace[check]
+
+            route.append(start)
+            route.reverse()
+            cost = len(route)
+            for bp in bonus_points:
+                if (bp[0],bp[1]) in route:
+                    cost = cost + bp[2]
+            return route,visited,cost     
 
         for dir in dicrections:
             point = (current[0] + dir[0], current[1] + dir[1])
@@ -28,19 +42,4 @@ def BFS(matrix, start, end, bonus_points):
                 path.append(point)
                 visited.append(point)
 
-    if(current!=end):
-        return None,-1
-    route = []
-    check = end
-
-    while check != start:
-        route.append(check)
-        check = trace[check]
-
-    route.append(start)
-    route.reverse()
-    cost = len(route)
-    for bp in bonus_points:
-        if (bp[0],bp[1]) in route:
-            cost = cost + bp[2]
-    return route, cost     
+    return None, None, -1
