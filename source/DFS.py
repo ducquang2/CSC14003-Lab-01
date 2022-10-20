@@ -31,7 +31,7 @@ def DFS(maze,start,end,bonus_points):
             for bp in bonus_points:
                 if (bp[0],bp[1]) in route:
                     cost = cost + bp[2]
-            return route, cost     
+            return route,explored,cost     
         
         for step in dirs:
             next = (current[0] + step[0], current[1] + step[1])
@@ -49,4 +49,4 @@ def DFS(maze,start,end,bonus_points):
         else:
             preDirection=temp
                 
-    return None,-1
+    return None,None,-1

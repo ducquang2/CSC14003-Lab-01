@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-PATH = './input/map_bpoint1.txt'
+
 def visualize_maze(matrix, bonus, start, end, route=None, explored=None):
     """
     Args:

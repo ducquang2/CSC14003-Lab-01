@@ -1,7 +1,9 @@
-0
-xxxxxxxxxxxxxxxxxxxxxx
-                     x
-x                    x
+2
+2 10 -8
+1 8 -5
+xxxxxxxxxx xxxxxxxxxxx
+x       +            x
+x         +          x
 x         x          x
 x        x x         x
 x       x S x        x

@@ -1,10 +1,14 @@
 from queue import PriorityQueue
 from BFS import check_in_matrix
+import math
 
-def UCS(matrix, start, end, bonus_points):    
+def heuristic1(point, end):
+    return abs(math.sqrt((point[0]-end[0])*(point[0]-end[0])+(point[1]-end[1])*(point[1]-end[1])))
+
+def AStar(matrix, start, end, bonus_points):    
     waiting = PriorityQueue()
     waiting.put((0, start))
-    visited = []
+    explored = []
     bp_dict = dict()
     directions = [(0, 1), (1, 0), (-1, 0), (0,-1)]
     for x, y, b in bonus_points:
@@ -39,7 +43,7 @@ def UCS(matrix, start, end, bonus_points):
             route.append(start)
             route.reverse()
             
-            return route, visited, cost_val
+            return route, explored, cost_val
         
         for step in directions:
             point = (current[0] + step[0], current[1] + step[1])
@@ -54,10 +58,10 @@ def UCS(matrix, start, end, bonus_points):
 
             next_cost += 1
 
-            if ((point not in cost) or (next_cost < cost[point])) and (point not in visited):
+            if ((point not in cost) or (next_cost < cost[point])) and (point not in explored):
                 cost[point] = next_cost
-                waiting.put((next_cost, point))
-                visited.append(point)
+                waiting.put((heuristic1(point,end)+next_cost, point))
+                explored.append(point)
                 trace[point] = current
 
     return None,None,-1
