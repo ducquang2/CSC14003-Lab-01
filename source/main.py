@@ -17,38 +17,43 @@ def main(argv):
         sys.exit(2)
 
     for opt, arg in opts:
-        if opt == '--in':
+        if opt == '--input':
             in_file += arg
-        elif opt == '--out':
+        elif opt == '--output':
             out_file += arg
 
     bonus_points, matrix = read_file(in_file)
     start, end = getStartEndPoint(matrix)
     
-    # out_put = './output/BFS.jpg'
+    out_put = './output/' + out_file + '/bfs/BFS.jpg'
+    name = 'BFS'
     route,explored,cost = BFS(matrix,start,end,bonus_points)
-    write_cost_path(cost)
-    visualize_maze(matrix,bonus_points,start,end,out_file,route,explored)
+    write_cost_path(cost, './output/' + out_file + '/bfs/BFS.txt')
+    visualize_maze(matrix,bonus_points,start,end,out_put,name,route,explored)
 
-    # out_put = './output/DFS.jpg'
+    out_put = './output/' + out_file + '/dfs/DFS.jpg'
+    name = 'DFS'
     route,explored,cost = DFS(matrix,start,end,bonus_points)
-    write_cost_path(cost)
-    visualize_maze(matrix,bonus_points,start,end,out_file,route,explored)
+    write_cost_path(cost, './output/' + out_file + '/dfs/DFS.txt')
+    visualize_maze(matrix,bonus_points,start,end,out_put,name,route,explored)
 
-    # out_put = './output/UCS.jpg'
+    out_put = './output/' + out_file + '/ucs/UCS.jpg'
+    name = 'UCS'
     route,explored,cost = UCS(matrix,start,end,bonus_points)
-    write_cost_path(cost)
-    visualize_maze(matrix,bonus_points,start,end,out_file,route,explored)
+    write_cost_path(cost, './output/' + out_file + '/ucs/UCS.txt')
+    visualize_maze(matrix,bonus_points,start,end,out_put,name,route,explored)
 
-    # out_put = './output/GBFS.jpg'
+    out_put = './output/' + out_file + '/gbfs/GBFS.jpg'
+    name = 'GBFS'
     route,explored,cost = GBFS(matrix,start,end,bonus_points)
-    write_cost_path(cost)
-    visualize_maze(matrix,bonus_points,start,end,out_file,route,explored)
+    write_cost_path(cost, './output/' + out_file + '/gbfs/GBFS.txt')
+    visualize_maze(matrix,bonus_points,start,end,out_put,name,route,explored)
 
-    # out_put = './output/AStar.jpg'
+    out_put = './output/' + out_file + '/astar/astar.jpg'
+    name = 'AStar'
     route,explored,cost = AStar(matrix,start,end,bonus_points)
-    write_cost_path(cost)
-    visualize_maze(matrix,bonus_points,start,end,out_file,route,explored)
+    write_cost_path(cost, './output/' + out_file + '/astar/astar.txt')
+    visualize_maze(matrix,bonus_points,start,end,out_put,name,route,explored)
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
