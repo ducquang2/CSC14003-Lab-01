@@ -4,7 +4,7 @@ from BFS import *
 from DFS import *
 from UCS import *
 from GBFS import *
-from A_SAO import *
+from AStar import *
 
 # PATH = './input/level_2/input3.txt'
 
