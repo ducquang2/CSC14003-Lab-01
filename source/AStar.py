@@ -5,6 +5,9 @@ import math
 def heuristic1(point, end):
     return abs(math.sqrt((point[0]-end[0])*(point[0]-end[0])+(point[1]-end[1])*(point[1]-end[1])))
 
+def heuristic2(point, end):
+    return abs(point[0]-end[0])*(point[0]-end[0])+(point[1]-end[1])*(point[1]-end[1])
+
 def AStar(matrix, start, end, bonus_points):    
     waiting = PriorityQueue()
     waiting.put((0, start))
